@@ -54,19 +54,22 @@
                 // form.file.value = '';
                 return;
             }
-            let buffer = new Uint8Array(this.result);
             // console.log(buffer.length);
             // console.log(buffer);
             // let ptr = setFile(buffer, buffer.length);
-            let offset = Module._malloc(buffer.length);
             // console.log(offset);
+            let ptr = 0;
+            let offset = 0;
             try {
+                let buffer = new Uint8Array(this.result);
+                offset = Module._malloc(buffer.length);
+                console.log(offset);
                 Module.HEAP8.set(buffer, offset);
+                ptr = setFile(offset, buffer.length, +form.time.value * 1000);
             } catch (e) {
                 $errorTip.innerHtml = 'oh, no! 不小心挂了，请刷新页面重试';
                 throw e;
             }
-            let ptr = setFile(offset, buffer.length, +form.time.value * 1000);
             let width = Module.HEAPU32[ptr / 4]
                 height = Module.HEAPU32[ptr / 4 + 1],
                 imgBufferPtr = Module.HEAPU32[ptr / 4 + 2],
@@ -95,6 +98,7 @@
     let canvas = document.querySelector('#canvas'),
         ctx = canvas.getContext('2d');
     canvas.width = Math.max(600, window.innerWidth - 40);
+
     function drawImage(width, height, buffer) {
         let imageData = ctx.createImageData(width, height);
         let k = 0;
@@ -111,11 +115,6 @@
         memContext.putImageData(imageData, 0, 0, 0, 0, width, height);
         ctx.drawImage(memCanvas, 0, 0, width, height, 0, 0, canvas.width, canvas.height);
     }
-    let warn = console.warn;
-    console.warn = function (content) {
-        console.log(content);
-        warn(content); 
-    } 
 }();
 </script>
 </body>
