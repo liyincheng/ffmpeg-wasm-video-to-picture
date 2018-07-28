@@ -23,6 +23,7 @@ EMSCRIPTEN_KEEPALIVE //这个宏表示这个函数要作为导出的函数
 ImageData *setFile(uint8_t *buff, const int buffLength, int timeStamp) {
 
     unsigned char *avio_ctx_buffer = NULL;
+    // 对于普通的mp4文件，这个size只要1MB就够了，但是对于mov/m4v需要和buff一样大
     size_t avio_ctx_buffer_size = buffLength;
     
     // AVInputFormat* in_fmt = av_find_input_format("h265");
