@@ -22,9 +22,10 @@ emcc web.c process.c ../lib/libavformat.bc ../lib/libavcodec.bc ../lib/libswscal
 它就会自动加载index.wasm文件
 
 ### 3. demo
-这个是编译好的文件，需要使用http服务：
+这个是编译好的文件，需要使用http服务才能使用wasm：
 ```bash
 # 在demo目录执行
+# npm install -g http-server
 http-server
 ```
 然后访问http://localhost:8080/main.html
