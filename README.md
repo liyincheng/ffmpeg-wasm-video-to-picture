@@ -12,7 +12,7 @@ gcc simple.c -lavutil -lavformat -lavcodec `pkg-config --libs --cflags libavutil
 ### 2. cfile/web.c proccess.c process.h
 这个是网页版的核心C代码，使用以下命令编译成wasm：
 ```bash
-emcc web.c process.c ../lib/libavformat.bc ../lib/libavcodec.bc ../lib/libswscale.bc ../lib/libswresample.bc ../lib/libavutil.bc -Os -s WASM=1 -o index.html -s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s ALLOW_MEMORY_GROWTH=1 -s TOTAL_MEMORY=167772160
+emcc web.c process.c ../lib/libavformat.bc ../lib/libavcodec.bc ../lib/libswscale.bc ../lib/libswresample.bc ../lib/libavutil.bc -Os -s WASM=1 -o index.html -s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s ALLOW_MEMORY_GROWTH=1 -s TOTAL_MEMORY=16777216
 ```
 注意上面的.bc文件顺序不能颠倒，被依赖的文件要往后放  
 这个会生成index.wasm和index.js，在html引入
